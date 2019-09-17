@@ -8,6 +8,8 @@
 
 import Foundation
 
+print("Start...")
+
 var isGCD = true
 
 if isGCD {
@@ -15,3 +17,7 @@ if isGCD {
 } else {
     runOperation()
 }
+
+sleep(2)
+
+print("End.")
