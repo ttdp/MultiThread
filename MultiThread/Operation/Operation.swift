@@ -8,65 +8,53 @@
 
 import Foundation
 
-var emails: [String] = []
 func runOperation() {
-    let operation = BlockOperation()
+    var emails: [String] = []
     
-    operation.addExecutionBlock {
-        NetworkUtility.getEmail("https://reqres.in/api/users/2") { email in
+    let operation = BlockOperation {
+        // This operation's callback will not be waited for completion,
+        // because the network run on non-main queue.
+        // It can't block the current thread.
+        NetworkUtility.getEmail("https://reqres.in/api/users/1") { email in
             if let email = email {
                 emails.append(email)
             }
         }
     }
     
-    operation.addExecutionBlock {
-        NetworkUtility.getEmail("https://reqres.in/api/users/3") { email in
-            if let email = email {
-                emails.append(email)
-            }
-        }
+    let operation2 = BlockOperation {
+        emails.append("janet.weaver@reqres.in")
+    }
+
+    let operation3 = BlockOperation {
+        emails.append("emma.wong@reqres.in")
     }
     
-    operation.addExecutionBlock {
-        NetworkUtility.getEmail("https://reqres.in/api/users/4") { email in
-            if let email = email {
-                emails.append(email)
-            }
-        }
+    let operation4 = BlockOperation {
+        emails.append("eve.holt@reqres.in")
     }
     
-    operation.addExecutionBlock {
-        NetworkUtility.getEmail("https://reqres.in/api/users/5") { email in
-            if let email = email {
-                emails.append(email)
-            }
-        }
+    let operation5 = BlockOperation {
+        emails.append("charles.morris@reqres.in")
     }
     
-    operation.addExecutionBlock {
-        NetworkUtility.getEmail("https://reqres.in/api/users/6") { email in
-            if let email = email {
-                emails.append(email)
-            }
-        }
+    let operation6 = BlockOperation {
+        emails.append("tracey.ramos@reqres.in")
     }
     
-    operation.addExecutionBlock {
-        NetworkUtility.getEmail("https://reqres.in/api/users/7") { email in
-            if let email = email {
-                emails.append(email)
-            }
-        }
-    }
-    
-    operation.completionBlock = {
-        DispatchQueue.global().asyncAfter(deadline: .now() + 1) {
-            print("We got 6 emails:")
-            emails.forEach { print($0) }
-        }
+    let operation7 = BlockOperation {
+        emails.append("michael.lawson@reqres.in")
     }
     
     let queue = OperationQueue()
-    queue.addOperation(operation)
+    queue.addOperation(operation2)
+    queue.addOperation(operation3)
+    queue.addOperation(operation4)
+    queue.addOperation(operation5)
+    queue.addOperation(operation6)
+    queue.addOperation(operation7)
+    queue.waitUntilAllOperationsAreFinished()
+    
+    print("We got 6 emails:")
+    emails.forEach { print($0) }
 }

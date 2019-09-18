@@ -10,7 +10,7 @@ import Foundation
 
 print("Start...")
 
-var isGCD = true
+var isGCD = false
 
 if isGCD {
     runGCD()
