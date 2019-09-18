@@ -15,7 +15,8 @@ var isGCD = false
 if isGCD {
     runGCD()
 } else {
-    runOperation()
+//    runOperation()
+    runQueue()
 }
 
 sleep(2)
