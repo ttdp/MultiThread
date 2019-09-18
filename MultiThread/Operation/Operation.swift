@@ -18,6 +18,7 @@ func runOperation() {
         NetworkUtility.getEmail("https://reqres.in/api/users/1") { email in
             if let email = email {
                 emails.append(email)
+                print(email)
             }
         }
     }
@@ -47,6 +48,7 @@ func runOperation() {
     }
     
     let queue = OperationQueue()
+    queue.addOperation(operation)
     queue.addOperation(operation2)
     queue.addOperation(operation3)
     queue.addOperation(operation4)
@@ -57,4 +59,6 @@ func runOperation() {
     
     print("We got 6 emails:")
     emails.forEach { print($0) }
+    
+    print("----------------")
 }
